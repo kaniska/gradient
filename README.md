@@ -8,12 +8,15 @@ This project aims at analyzing the relationship between drugs, diseaseas and doc
 # Repo Structure
 
 # Dataset
-- Link to raw source data
-- Link to processed data
+- [Drug Bank Ids](https://go.drugbank.com/releases/latest#open-data)
+- Stanford Biosnap dataset
+    - [Disease Synopsis](http://snap.stanford.edu/biodata/datasets/10003/10003-D-MeshMiner.html)
+    - [Disease-Drug associations](http://snap.stanford.edu/biodata/datasets/10004/10004-DCh-Miner.html)
+- [Medicare Part D Prescribers - by Provider and Drug](https://data.cms.gov/provider-summary-by-type-of-service/medicare-part-d-prescribers/medicare-part-d-prescribers-by-provider-and-drug/data)
 
 # Design 
 
-- Analyzing the dataset and understanding he requirements
+- Analyzing the dataset and understanding the requirements
 
 # Development 
 
