@@ -3,7 +3,8 @@ GRADIENT (GRAphical Disease Insight for Effective Treatment)
 
 # Goal
 
-This project aims at analyzing the relationship between drugs, diseaseas and doctors using Tigergraph.
+This project aims at reviewing the quality drugss used for treatment of diseases and identifying if the prescribers are using low rated drugs by leveraging the TigerGraph.
+
 
 # Repo Structure
 
@@ -18,6 +19,8 @@ This project aims at analyzing the relationship between drugs, diseaseas and doc
 
 - Analyzing the dataset and understanding the requirements
 
+- [Input - Data Source] => [ETL Process] => [Graph Creattion Process] => [Graph Query & Analysis] => [Output - Insights]
+
 # Development 
 
 ## Fetch dataset
@@ -31,15 +34,92 @@ This project aims at analyzing the relationship between drugs, diseaseas and doc
 # Executon 
 
 ## run the query in tg cloud
+```
+Add your steps here
+```
 
-# Analytics
+![](images/graph_environment1.png)
 
--  Find patterns and analyze the query results
--  Examples
+# Analysis
 
-# Observations
+*Disclaimer*
+- Following reports have been generated from research datasets (links specified in Reference section) and are only for demonstrative purpose. 
+
+## Find the doctors prescribing low rated drugs for different diseases 
+- Sample Query 
+```
+Add your query here
+```
+- Output Graph
+![](images/analysis1a.png)
+
+- Obsrvation
+
+Prescriber Sub Graph for given disease
+
+![](images/analysis1b.png)
+    
+## Find the diseases being treated with low rated drugs
+- Sample Query 
+```
+Add your query here
+```
+- Output Graph
+![](images/analysis2a.png)
+
+- Obsrvation
+
+Drill down into a specific disease
+
+![](images/analysis2b.png)
+
+## Find top prescribers treating diseases with top-rated drugs
+
+- Sample Query 
+```
+Add your query here
+```
+- Output Graph
+![](images/analysis3a.png)
+
+- Obsrvation
+
+Drill down into a specific prescriber
+
+![](images/analysis3b.png)
+
+## Find similar prescriber groups treating similar diseases
+- Sample Query 
+```
+Add your query here
+```
+- Output Graph
+![](images/analysis4a.png)
+
+- Obsrvation
+
+## Find which drugs are used to treat most number of dieases
+- Sample Query 
+```
+Add your query here
+```
+- Output Graph
+![](images/analysis4a.png)
+
+- Obsrvation
+
+## Find which diseases use most number of drugs
+- Sample Query 
+```
+Add your query here
+```
+- Output Graph
+![](images/analysis4a.png)
+
+- Obsrvation
 
 # Future Work
+
 
 # Useful Tips
 
