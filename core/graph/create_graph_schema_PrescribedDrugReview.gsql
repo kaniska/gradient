@@ -1,0 +1,20 @@
+CREATE GRAPH PrescribedDrugReview()
+USE GRAPH PrescribedDrugReview
+
+CREATE SCHEMA_CHANGE JOB initGraph for GRAPH PrescribedDrugReview {
+    ADD VERTEX Drug(PRIMARY_ID generic_name STRING) WITH primary_id_as_attribute="true";
+    ADD VERTEX Disease(PRIMARY_ID disease_name STRING, description STRING) WITH primary_id_as_attribute="true";
+    ADD VERTEX BrandName(PRIMARY_ID name STRING) WITH primary_id_as_attribute="true";
+    ADD VERTEX Prescriber(PRIMARY_ID prescriber_npi STRING, first_name STRING, last_name STRING) WITH primary_id_as_attribute="true";
+    ADD VERTEX Prescriber_Type(PRIMARY_ID prescriber_type STRING) WITH primary_id_as_attribute="true";
+    ADD VERTEX Review(PRIMARY_ID review_id STRING, review STRING, rating INT, date DATETIME) WITH primary_id_as_attribute="true";
+    
+    ADD UNDIRECTED EDGE used_for(FROM Drug, TO Disease);
+    ADD UNDIRECTED EDGE associated_with(FROM Review, TO Disease);
+    ADD UNDIRECTED EDGE has_name(FROM Drug, TO BrandName);
+    ADD UNDIRECTED EDGE has_prescriber_type(FROM Prescriber, TO Prescriber_Type);
+    ADD UNDIRECTED EDGE prescribed(FROM Prescriber, To Drug, total_drug_cost FLOAT, total_drug_cost_ge65 FLOAT);
+    ADD UNDIRECTED EDGE has_review(FROM Drug, To Review);
+}
+
+RUN SCHEMA_CHANGE JOB initGraph
