@@ -3,7 +3,8 @@ GRADIENT (GRAphical Disease Insight for Effective Treatment)
 
 # Goal
 
-This project aims at using Tigergraph reviewing the quality drugs beings used for treattment of diseases and indentifying if the prescribers are using low rated drugs.
+This project aims at reviewing the quality drugss used for treatment of diseases and identifying if the prescribers are using low rated drugs by leveraging the TigerGraph.
+
 
 # Repo Structure
 
