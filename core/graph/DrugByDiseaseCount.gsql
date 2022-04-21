@@ -1,0 +1,21 @@
+CREATE QUERY DrugByDiseaseCount(INT topK) FOR GRAPH PrescribedDrugReview { 
+  TYPEDEF tuple<Vertex<Drug> drug, INT diseases_treated_count> DiseasesTreatedCount;
+  
+  SetAccum<EDGE> @@drug_disease_edges;
+  SumAccum<INT> @diseases_treated_count;
+
+  topk_drugs = SELECT d FROM Drug:d
+  POST-ACCUM d.@diseases_treated_count += d.outdegree("used_for")
+  ORDER BY d.outdegree("used_for") DESC
+  LIMIT 10
+  ;
+  
+  topk_brand_names = SELECT b FROM topk_drugs:d -(has_name:e)- BrandName:b
+  ACCUM @@drug_disease_edges += e;
+  
+  diseases = SELECT ds FROM topk_drugs:d -(used_for:e)- Disease:ds
+  ACCUM @@drug_disease_edges += e
+  ;
+  
+  PRINT topk_drugs, @@drug_disease_edges, diseases, topk_brand_names;
+}

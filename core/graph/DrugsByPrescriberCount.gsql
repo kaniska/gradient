@@ -1,0 +1,15 @@
+CREATE QUERY DrugsByPrescriberCount(INT topK, INT botK) FOR GRAPH PrescribedDrugReview { 
+  TYPEDEF tuple<Vertex<Drug> drug, INT prescriber_count> DrugPrescriberCount;
+  SumAccum<INT> @prescribed_count;
+
+  HeapAccum<DrugPrescriberCount>(topK, prescriber_count DESC) @@most_prescribed_drugs;
+  HeapAccum<DrugPrescriberCount>(botK, prescriber_count ASC) @@least_prescribed_drugs;
+  
+  drugs = SELECT d FROM Drug:d
+          POST-ACCUM
+            @@most_prescribed_drugs += DrugPrescriberCount(d, d.outdegree("prescribed")),
+            @@least_prescribed_drugs += DrugPrescriberCount(d, d.outdegree("prescribed"))
+;
+  
+  PRINT @@most_prescribed_drugs, @@least_prescribed_drugs;
+}

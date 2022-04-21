@@ -1,0 +1,19 @@
+CREATE QUERY DiseaseByDrugCount(INT topK) FOR GRAPH PrescribedDrugReview { 
+  TYPEDEF tuple<Vertex<Disease> disease, INT treated_by_drug_count> TreatedByDrugCount;
+  
+  SetAccum<EDGE> @@drug_disease_edges;
+  HeapAccum<TreatedByDrugCount>(topK, treated_by_drug_count DESC) @@topk_diseases_accum;
+  
+  topk_diseases = SELECT ds FROM Disease:ds
+  POST-ACCUM @@topk_diseases_accum += TreatedByDrugCount(ds, ds.outdegree("used_for"))
+  ORDER BY ds.outdegree("used_for") DESC
+  LIMIT 10
+  ;
+  
+  drugs = SELECT d FROM topk_diseases:ds -(used_for:e)- Drug:d
+  ACCUM @@drug_disease_edges += e
+  ;
+
+  PRINT @@topk_diseases_accum;
+  PRINT topk_diseases, @@drug_disease_edges, drugs;
+}

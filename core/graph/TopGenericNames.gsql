@@ -1,0 +1,10 @@
+CREATE QUERY TopGenericNames(INT topk) FOR GRAPH PrescribedDrugReview {
+  SumAccum<INT> @brnd_name;
+  drugs = SELECT d
+  FROM Drug:d
+  POST-ACCUM d.@brnd_name += d.outdegree("has_name")
+  ORDER BY d.outdegree("has_name") DESC
+  LIMIT topk;
+  
+  PRINT drugs[drugs.@brnd_name];
+}

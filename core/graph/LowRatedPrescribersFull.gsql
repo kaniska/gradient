@@ -1,0 +1,12 @@
+CREATE QUERY LowRatedPrescribersFull(/* Parameters here */) FOR GRAPH PrescribedDrugReview {
+  SetAccum<VERTEX> @v;
+  
+  samplePrescribers = SELECT ps FROM Prescriber:ps LIMIT 100;
+  prescribersMostLowRatedDrugs = SELECT ps FROM samplePrescribers:ps
+  ACCUM ps.@v += LowRatedDrugsForPrescriber(ps, 5)
+  HAVING ps.@v.size() >= 1
+  ORDER BY ps.@v.size() DESC
+  ;
+  
+  PRINT prescribersMostLowRatedDrugs;
+}

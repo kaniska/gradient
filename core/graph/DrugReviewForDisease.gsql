@@ -1,0 +1,20 @@
+CREATE QUERY DrugReviewForDisease(VERTEX<Disease> disease, INT threshold) FOR GRAPH PrescribedDrugReview {
+  # Assign drug ratings per drug
+  
+  BagAccum<INT> @ratings_list;
+  SumAccum<FLOAT> @avg_drug_rating;
+  SetAccum<EDGE> @@disease_drug_edges;
+    
+  disease_set = {disease};
+  
+  drugs = SELECT d FROM Drug:d -(has_review:e1)- Review:r -(associated_with:e2)- disease_set:ds
+  PER (d, e1, r, e2, ds)
+  ACCUM d.@ratings_list += r.rating
+  POST-ACCUM d.@avg_drug_rating += avg(d.@ratings_list)
+  HAVING d.@avg_drug_rating <= threshold;
+
+  tmp = SELECT d FROM drugs:d -(used_for:e)- disease_set:ds
+  ACCUM @@disease_drug_edges += e;
+  
+  PRINT disease_set, @@disease_drug_edges, drugs;
+}

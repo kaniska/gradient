@@ -1,0 +1,10 @@
+CREATE QUERY dropNodes(/* Parameters here */) FOR GRAPH PrescribedDrugReview { 
+  tmp = SELECT d FROM Drug:d-(used_for:e1)-Disease:ds -(associated_with:e2)- Review:r
+  ACCUM DELETE(e1), DELETE(e2)
+  POST-ACCUM DELETE(ds);
+  
+  tmp = SELECT d FROM Drug:d -(has_review:e)- Review:r
+  ACCUM DELETE(e)
+  POST-ACCUM DELETE(r);
+  PRINT "dropNodes works!"; 
+}

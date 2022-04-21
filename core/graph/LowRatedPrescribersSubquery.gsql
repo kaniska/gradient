@@ -1,0 +1,17 @@
+CREATE QUERY LowRatedPrescribersSubquery(VERTEX<Drug> drug, VERTEX<Disease> disease) FOR GRAPH PrescribedDrugReview RETURNS (FLOAT) { 
+  SumAccum<FLOAT> @@avg_drug_rating;
+  BagAccum<FLOAT> @@list_drug_rating;
+  
+  drug_set = {drug};
+  disease_set = {disease};
+  
+  tmp = SELECT d FROM drug_set:d -(has_review:e1)- Review:r -(associated_with:e2)- disease_set:ds
+  PER (d, e1, r, e2, ds)
+  ACCUM @@list_drug_rating += r.rating * 1.0
+ # POST-ACCUM (d) @@avg_drug_rating += avg(d.neighborAttribute("has_review", "Review", "rating"));
+  POST-ACCUM (d) @@avg_drug_rating += avg(@@list_drug_rating);
+  
+  PRINT @@avg_drug_rating;
+  PRINT @@list_drug_rating;
+  RETURN @@avg_drug_rating;
+}

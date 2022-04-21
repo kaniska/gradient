@@ -1,0 +1,17 @@
+CREATE QUERY LowRatedDrugsForPrescriber(VERTEX<Prescriber> prescriber, INT threshold) FOR GRAPH PrescribedDrugReview RETURNS (SET<VERTEX>){   
+  BagAccum<FLOAT> @ratings_by_disease;
+  SumAccum<FLOAT> @cum_avg_drug_rating;
+  SetAccum<EDGE> @@allEdges;
+  
+  SumAccum<INT> @@num_low_rated_drugs;
+  
+  prescriber_set = {prescriber};
+  start_drugs = SELECT d FROM prescriber_set:ps -(prescribed:e)- Drug:d ACCUM @@allEdges += e;
+  
+  drugs = SELECT d FROM start_drugs:d -(used_for:e)- Disease:ds
+  ACCUM d.@ratings_by_disease += LowRatedPrescribersSubquery(d, ds)
+  POST-ACCUM d.@cum_avg_drug_rating += avg(d.@ratings_by_disease)
+  HAVING d.@cum_avg_drug_rating <= threshold;
+  
+  RETURN drugs; 
+}
