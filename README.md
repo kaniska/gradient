@@ -1,5 +1,5 @@
 # Project Name
-GRADIENT (GRAphical Disease Insight for Effective Treatment)
+GRADIENT (GRAphical Drugs Insight for Effective Treatment)
 
 # Goal
 
