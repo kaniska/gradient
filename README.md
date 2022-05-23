@@ -63,7 +63,8 @@ section) and are only for demonstrative purposes.
  
  - **Technology Stack**:
  
- TigerGraph Studio was used for executing GSQL queries to extract insights.
+  - TigerGraph Studio was used for executing GSQL queries to extract insights.
+  - Jupyter Notebook was used to run pytigergraph library and connecting to 
  
  - **Visuals**:
  
@@ -72,33 +73,47 @@ section) and are only for demonstrative purposes.
 ## Dependencies
 
 - pandas  
+- pytigergraph
 
 ## Installation
 
 This can include:
 1. Clone repository
 2. Login to Tigergraph Account and verify Graph Studio is accessible
-3. Run the Notebooks
+  - https://gradient-test.i.tgcloud.io 
+  - user: public_access 
+  - pwd: public_access
+4. Run the Notebooks
 - https://github.com/kaniska/gradient/tree/main/notebooks
+
 
 ## Future Improvements
 
 ● Overall we have established a solid foundation for developing interesting features and
 discovering many anomalies which can improve healthcare and save lives.
+
 ● Cluster the Prescriber and providers based on drugs prescribed.
+
 ● We have already identified prescribers recommending low rated drugs which are also
 very costly for example related to HIV Treatments.
+
 ● We would like to create a cluster of such prescriber-drug-disease groups.
+
 ● There is a great opportunity to find if banned drugs and drugs with adverse effects are
 being used.
+
 ● Check if any low rated drugs are being prescribed to age group > 65
 Find similar prescribers based on the drugs prescription.
+
 ● Find social sentiment and usefulness of drugs by mining the review dataset (using NLP)
 and then enrich the Graph.
+
 ● Find Adverse Drug Events and Key Terms from the Review Notes and link them to the
 Drug Node in Graph.
+
 ● We want to capture time as a node in our graph in order to show how the price and
 rating of drugs change over time.
+
 ● We want to leverage Data Science Algorithms like
 https://docs.tigergraph.com/graph-ml/current/classification-algorithms/k-nearest-neighbor
 s and
